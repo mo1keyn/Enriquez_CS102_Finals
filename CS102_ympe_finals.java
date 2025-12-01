@@ -1,0 +1,395 @@
+// Online Java Compiler
+// Use this editor to write, compile and run your Java code online
+import java.util.ArrayList;
+import java.util.Scanner;
+
+class Customer {
+    String name;
+    String email;
+    String phoneNumber;
+    String address;
+    
+    public Customer() {
+    }
+
+    public Customer(String name, String email, String phoneNumber, String address) {
+        this.name = name;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+    }
+    
+    //Accessors
+    public String getName() {
+        return name;
+    }
+    public String getEmail() {
+        return email;
+    }
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+    public String getAddress() {
+        return address;
+    }
+    
+    //Mutators
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+    public void setAddress(String address) {
+        this.address = address;
+    }
+}
+
+class Order {
+    ArrayList<Product> cartItems = new ArrayList<Product>();
+    float grandTotal = 0;
+    String paymentMethod;
+    String paymentAccountNumber;
+    String paymentAccountName;
+    String shippingMethod;
+    
+    public void addToCart(Product product) {
+        this.grandTotal += product.getUnitPrice() * product.getQuantity();
+        cartItems.add(product);
+    }
+    
+    public ArrayList<Product> getCartList() {
+        return this.cartItems;
+    }
+
+    public float getGrandTotal() {
+        return grandTotal;
+    }
+    
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+    
+    public void setPaymentMethod(int paymentMethod) {
+        switch (paymentMethod) {
+            case 1:
+                this.paymentMethod = "GCASH";
+                break;
+            case 2:
+                this.paymentMethod = "BANK_TRANSFER";
+                break;
+            default:
+                this.paymentMethod = "Unknown";
+                break;
+        }
+    }
+    
+    public String getShippingMethod() {
+        return shippingMethod;
+    }
+    
+    public void setShippingMethod(int shippingMethod) {
+        switch (shippingMethod) {
+            case 1:
+                this.shippingMethod = "DOOR_TO_DOOR";
+                break;
+            case 2:
+                this.shippingMethod = "PICK_UP";
+                break;
+            default:
+                this.shippingMethod = "Unknown";
+                break;
+        }
+    }
+
+    public String getPaymentAccountNumber() {
+        return paymentAccountNumber;
+    }
+
+    public void setPaymentAccountNumber(String paymentAccountNumber) {
+        this.paymentAccountNumber = paymentAccountNumber;
+    }
+    
+    public String getPaymentAccountName() {
+        return paymentAccountName;
+    }
+
+    public void setPaymentAccountName(String paymentAccountName) {
+        this.paymentAccountName = paymentAccountName;
+    }
+}
+
+class Inventory {
+    ArrayList<Product> products = new ArrayList<Product>();
+    
+    public ArrayList<Product> getInventory() {
+        return this.products;
+    }
+    
+    public Product getItem(int id) {
+        Product foundItem = null;
+        
+        for (Product item: products) {
+            if (item.id == id) {
+                foundItem = item;
+                break;
+            }
+        }
+        
+        return foundItem;
+    }
+    
+    public void setProduct(Product product) {
+        this.products.add(product);
+    }
+}
+
+class Product {
+    static int ctr = 1;
+    int id;
+    String productName;
+    float unitPrice;
+    int quantity;
+    
+    //Constructors
+    public Product() {
+        //empty
+    }
+    
+    public Product(String productName, float unitPrice, int quantity) {
+        this.id = ctr++;
+        this.productName = productName;
+        this.unitPrice = unitPrice;
+        this.quantity = quantity;
+    }
+    
+    //Accessors
+    public int getId() {
+        return id;
+    }
+    public String getProductName() {
+        return productName;
+    }
+    public float getUnitPrice() {
+        return unitPrice;
+    }
+    public int getQuantity() {
+        return quantity;
+    }
+    
+    //Mutators
+    public void setId(int id) {
+        this.id = id;
+    }
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+    public void setUnitPrice(float unitPrice) {
+        this.unitPrice = unitPrice;
+    }
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+}
+
+class Main {
+    private static Inventory inventory = new Inventory();
+    private static Order order = new Order();
+    private static Customer customer = new Customer();
+    
+    static void InitializeProductList() {
+        Product product1 = new Product("Laptop", 900.00f, 7);
+        Product product2 = new Product("Android Phone", 650.00f, 11);
+        Product product3 = new Product("Mobile Console", 700.00f, 15);
+        Product product4 = new Product("Desktop Unit", 1250.00f, 4);
+        Product product5 = new Product("Home Console", 550.00f, 9);
+        
+        inventory.setProduct(product1);
+        inventory.setProduct(product2);
+        inventory.setProduct(product3);
+        inventory.setProduct(product4);
+        inventory.setProduct(product5);
+    }
+
+    static void clearScreen() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+    }
+    
+    static void renderMenu() {
+        System.out.println("-----------------------------------------------------------");
+        System.out.println("\tBlataditz eCommerce Lite and Retail Management\t");
+        System.out.println("\tYour 1-Stop All-You-Need Gaming Store!\t");
+        System.out.println("-----------------------------------------------------------\n");
+        System.out.println("\tSelect from menu:");
+        System.out.println("\t1. Buy Products Online");
+        System.out.println("\t2. Manage Inventory [IN MAINTENANCE]");
+        System.out.println("\t3. Visit Digital Store [IN MAINTENANCE]\n");
+        System.out.print("\tEnter your choice: ");
+    }
+    
+    static void displayInventory() {
+        ArrayList<Product> products = inventory.getInventory();
+        System.out.println("\tList of Products:");
+        for (Product item: products) {
+            System.out.println("\t" + item.getId() + ". " + item.getProductName() + " - price: " + item.getUnitPrice() + ", stock: " + item.getQuantity());
+        }
+    }
+
+    static void displayCartItems() {
+        ArrayList<Product> cartItems = order.getCartList();
+        System.out.println("\tItems in Cart:");
+        for (Product item: cartItems) {
+            System.out.println("\t[x] " + item.getProductName() + " - unit price: " + item.getUnitPrice() 
+                + ", qty: " + item.getQuantity() + ", total: " 
+                + (item.getUnitPrice() * item.getQuantity()));
+        }
+        System.out.println("\tGrand Total: " + order.getGrandTotal());
+    }
+
+    static void inputCustomerInformation(Scanner scanner) {
+        scanner.nextLine();
+        System.out.println("-----------------------------------------------------------");
+        System.out.println("\tPurchase Order\t");
+        System.out.println("-----------------------------------------------------------\n");
+        System.out.println("\tCustomer Information:");
+        System.out.print("\tEnter Name: ");
+        customer.setName(scanner.nextLine());
+        System.out.print("\tEnter Email: ");
+        customer.setEmail(scanner.nextLine());
+        System.out.print("\tEnter Phone Number: ");
+        customer.setPhoneNumber(scanner.nextLine());
+        System.out.print("\tEnter Address: ");
+        customer.setAddress(scanner.nextLine());
+        System.out.print("\tSelect Payment Method: \n");
+        System.out.print("t\t1. GCash\n\t\t2. Bank Transfer\n\t\tEnter Choice: ");
+        order.setPaymentMethod(scanner.nextInt());
+        scanner.nextLine(); // Consume newline after int input
+        System.out.print("\n\t\tEnter Bank/GCash Account Number: ");
+        order.setPaymentAccountNumber(scanner.nextLine());
+        System.out.print("\n\t\tEnter Account Name: ");
+        order.setPaymentAccountName(scanner.nextLine());
+        System.out.print("\tSelect Shipping Method: \n");
+        System.out.print("\t\t1. Door to Door\n\t\t2. Pick Up\n\t\tEnter Choice: ");
+        order.setShippingMethod(scanner.nextInt());
+    }
+    
+    static char displayConfirmation(Scanner scanner) {
+        clearScreen();
+        System.out.println("-----------------------------------------------------------");
+        System.out.println("\tOrder Confirmation\t");
+        System.out.println("-----------------------------------------------------------\n");
+        System.out.println("\tCustomer Information:");
+        System.out.println("\tName: " + customer.getName());
+        System.out.println("\tEmail: " + customer.getEmail());
+        System.out.println("\tPhone Number: " + customer.getPhoneNumber());
+        System.out.println("\tAddress: " + customer.getAddress() + "\n");
+
+        displayCartItems();
+
+        System.out.println("\n\tPayment Method: " + order.getPaymentMethod());
+        System.out.println("\tAccount Number: " + order.getPaymentAccountNumber());
+        System.out.println("\tAccount Name: " + order.getPaymentAccountName() + "\n");
+
+        System.out.println("\tShipping Method: " + order.getShippingMethod());
+
+        System.out.print("\n\tCustomer Information confirmed? (y/n): ");
+        char confirm = scanner.next().charAt(0);
+
+        if (confirm == 'y' || confirm == 'Y') {
+            System.out.print("\n\tProcessing your order");
+            for (int i = 0; i < 3; i++) {
+                try {
+                    Thread.sleep(1000);
+                    System.out.print(".");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            System.out.println("\n\tPayment Confirmed!");
+            System.out.print("\n\tProcessing Order");
+            for (int i = 0; i < 3; i++) {
+                try {
+                    Thread.sleep(1000);
+                    System.out.print(".");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            System.out.println("\n\tOrder Successfully Placed!");
+        } else {
+            System.out.println("\n\tOrder cancelled. Returning to main menu...");
+        }
+        System.out.println("\n\tThank you for your purchase!\n");
+        return confirm;
+    }
+
+    static void addItemToCart(Scanner scanner) {
+        char moreChoice = 'n';
+        do {
+            clearScreen();
+            System.out.println("-----------------------------------------------------------");
+            System.out.println("\tPurchase Order\t");
+            System.out.println("-----------------------------------------------------------\n");
+
+            if (order.getCartList().size() > 0) {
+                displayCartItems();
+                System.out.println("\n-----------------------------------------------------------\n");
+            }
+            displayInventory();
+
+            System.out.print("\n\tSelect product to add: ");
+            int prodChoice = scanner.nextInt();
+            System.out.print("\n\tEnter quantity: ");
+            int qtyChoice = scanner.nextInt();
+            System.out.print("\n\tAdd more? (y/n): ");
+            moreChoice = scanner.next().charAt(0);
+            Product selectedProduct = inventory.getItem(prodChoice);
+            selectedProduct.setQuantity(qtyChoice);
+            order.addToCart(selectedProduct);
+        } while (moreChoice == 'y' || moreChoice == 'Y');
+    }
+
+    static void clearOrderDetails() {
+        order = new Order();
+        customer = new Customer();
+    }
+    
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int choice = 0;
+        
+        InitializeProductList();
+        
+        do {
+            renderMenu();
+            choice = scanner.nextInt();
+
+            switch(choice) {
+                case 1:
+                    char orderChoice = 'n';
+                    do {
+                        addItemToCart(scanner);
+                        clearScreen();
+                        inputCustomerInformation(scanner);
+                        orderChoice = displayConfirmation(scanner);
+                        clearOrderDetails();
+                    } while (orderChoice == 'n' || orderChoice == 'N');
+                    break;
+                case 2:
+                    System.out.println("Inventory Management selected.");
+                    break;
+                case 3:
+                    System.out.println("Exiting the application.");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        } while (choice != 3);
+
+        scanner.close();
+    }
+}
