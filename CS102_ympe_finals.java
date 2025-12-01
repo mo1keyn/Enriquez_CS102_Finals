@@ -1,5 +1,3 @@
-// Online Java Compiler
-// Use this editor to write, compile and run your Java code online
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -201,11 +199,11 @@ class Main {
     private static Customer customer = new Customer();
     
     static void InitializeProductList() {
-        Product product1 = new Product("Laptop", 900.00f, 7);
-        Product product2 = new Product("Android Phone", 650.00f, 11);
-        Product product3 = new Product("Mobile Console", 700.00f, 15);
-        Product product4 = new Product("Desktop Unit", 1250.00f, 4);
-        Product product5 = new Product("Home Console", 550.00f, 9);
+        Product product1 = new Product("Laptop", 59000.00f, 7);
+        Product product2 = new Product("Android Phone", 6500.00f, 11);
+        Product product3 = new Product("Mobile Console", 37000.00f, 15);
+        Product product4 = new Product("Desktop Unit", 65250.00f, 4);
+        Product product5 = new Product("Home Console", 28500.00f, 9);
         
         inventory.setProduct(product1);
         inventory.setProduct(product2);
@@ -224,11 +222,11 @@ class Main {
         System.out.println("\tBlataditz eCommerce Lite and Retail Management\t");
         System.out.println("\tYour 1-Stop All-You-Need Gaming Store!\t");
         System.out.println("-----------------------------------------------------------\n");
-        System.out.println("\tSelect from menu:");
+        System.out.println("\tSelect From Menu:");
         System.out.println("\t1. Buy Products Online");
         System.out.println("\t2. Manage Inventory [IN MAINTENANCE]");
         System.out.println("\t3. Visit Digital Store [IN MAINTENANCE]\n");
-        System.out.print("\tEnter your choice: ");
+        System.out.print("\tEnter Your Choice: ");
     }
     
     static void displayInventory() {
@@ -265,9 +263,9 @@ class Main {
         System.out.print("\tEnter Address: ");
         customer.setAddress(scanner.nextLine());
         System.out.print("\tSelect Payment Method: \n");
-        System.out.print("t\t1. GCash\n\t\t2. Bank Transfer\n\t\tEnter Choice: ");
+        System.out.print("\t\t1. GCash\n\t\t2. Bank Transfer\n\t\tEnter Choice: ");
         order.setPaymentMethod(scanner.nextInt());
-        scanner.nextLine(); // Consume newline after int input
+        scanner.nextLine();
         System.out.print("\n\t\tEnter Bank/GCash Account Number: ");
         order.setPaymentAccountNumber(scanner.nextLine());
         System.out.print("\n\t\tEnter Account Name: ");
@@ -323,7 +321,7 @@ class Main {
         } else {
             System.out.println("\n\tOrder cancelled. Returning to main menu...");
         }
-        System.out.println("\n\tThank you for your purchase!\n");
+        System.out.println("\n\tThank you for your purchase! Redirecting back to main page...\n");
         return confirm;
     }
 
@@ -380,10 +378,10 @@ class Main {
                     } while (orderChoice == 'n' || orderChoice == 'N');
                     break;
                 case 2:
-                    System.out.println("Inventory Management selected.");
+                    System.out.println("Inventory Management is under maintenance! Redirecting back to main page...");
                     break;
                 case 3:
-                    System.out.println("Exiting the application.");
+                    System.out.println("Digital Store is under maintenance! Will be back online in... never!");
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
